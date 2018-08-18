@@ -1,0 +1,100 @@
+inherit_gem:
+  onkcop:
+    - "config/rubocop.yml"
+    - "config/rails.yml"
+    # uncomment if use rspec cops
+    # - "config/rspec.yml"
+
+AllCops:
+  TargetRubyVersion: 2.4
+  TargetRailsVersion: 5.1
+  Exclude:
+    - "**/vendor/**/*" # rubocop config/default.yml
+    - "**/db/schema.rb"
+    - "**/db/migrate/*"
+    - "**/node_modules/**/*"
+    - "scripts/**/*"
+    - "spikes/**/*"
+    - "provisioning/**/*"
+    - "community_web/admin/lib/templates/**/*"
+  DisplayCopNames: true
+
+#################### Layout ################################
+
+# private/protected はインデントを下げない
+Layout/IndentationConsistency:
+  EnforcedStyle: normal
+Layout/SpaceInsideBlockBraces:
+  SpaceBeforeBlockParameters: true
+
+#################### Lint ##################################
+
+# 全般的に () の有無は、書き手の判断に委ねたい
+Lint/AmbiguousBlockAssociation:
+  Enabled: false
+
+# concerning の内部の private 宣言は外側のものとは別カウント
+Lint/UselessAccessModifier:
+  ContextCreatingMethods:
+    - concerning
+
+#################### Style #################################
+
+Style:
+  Enabled: false
+
+#################### Metrics ###############################
+
+Metrics/AbcSize:
+  Enabled: false
+
+Metrics/BlockLength:
+  Enabled: false
+
+Metrics/ClassLength:
+  Enabled: false
+
+Metrics/LineLength:
+  Enabled: false
+
+Metrics/MethodLength:
+  Enabled: false
+
+#################### Naming ################################
+
+Naming/FileName:
+  Exclude:
+    - "community_web/config/schedule/**/*"
+    - "community_web/config/routes/**/*"
+    - "deployment/config/deploy/**/*"
+    - "deployment-api/config/deploy/**/*"
+
+#################### Rails #################################
+
+# try は &. に書き換えない。(try! は書き換える)
+Rails/SafeNavigation:
+  ConvertTry: false
+
+# delegate の使用を強制しない。delegate メソッドの文法上可読性を落とす可能性がある
+Rails/Delegate:
+  Enabled: false
+
+# supportファイルでFactoryBotのcreateをつかうため。
+Rails/SaveBang:
+  Exclude:
+    - "**/spec/**/*"
+    - "**/test/**/*"
+
+# 誤検知が多いので不要なディレクトリは対象外とする
+Rails/SaveBang:
+  Exclude:
+    - "**/spec/**/*"
+    - "**/test/**/*"
+    - "**/db/**/*"
+    - "**/config/**/*"
+
+# `unless worlds.present?`を`if worlds.blank?`に書き換えない
+Rails/Blank:
+  NilOrEmpty: true
+  NotPresent: false
+  UnlessPresent: false
