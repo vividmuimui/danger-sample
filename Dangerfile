@@ -11,3 +11,7 @@ warn("Big PR") if git.lines_of_code > 500
 # Don't let testing shortcuts get into master by accident
 fail("fdescribe left in tests") if `grep -r fdescribe specs/ `.length > 1
 fail("fit left in tests") if `grep -r fit specs/ `.length > 1
+
+# rubocop
+public_files = (git.modified_files + git.added_files).select { |path| path.include?("/public/") }
+rubocop.lint files: public_files, inline_comment: true, report_danger: true
