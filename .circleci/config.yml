@@ -73,10 +73,26 @@ jobs:
 
     steps:
       - checkout
+      - restore_cache:
+          keys:
+          - v1-danger-dependencies-{{ checksum "danger/Gemfile.lock" }}
+          # fallback to using the latest cache if no exact match is found
+          - v1-danger-dependencies-
       - run:
-          command: gem install danger
+          name: install dependencies
+          command: |
+            bundle install --jobs=4 --retry=3 --path vendor/bundle
+          working_directory: danger
+      - save_cache:
+          paths:
+            - danger/vendor/bundle
+          key: v1-danger-dependencies-{{ checksum "danger/Gemfile.lock" }}
+
       - run:
-          command: danger --verbose
+          # git rootで動かす必要がある
+          command: bundle exec danger --verbose --dangerfile=danger/Dangerfile
+          environment:
+            BUNDLE_GEMFILE: danger/Gemfile
 
 workflows:
   version: 2
@@ -84,7 +100,4 @@ workflows:
   build_all:
     jobs:
       - build
-      - danger:
-          requires:
-            - build
-
+      - danger
