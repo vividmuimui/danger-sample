@@ -1,0 +1,10 @@
+{
+  "name": "danger-sample-danger",
+  "dependencies": {
+    "textlint": "^11.0.0",
+    "textlint-filter-rule-comments": "^1.2.2",
+    "textlint-filter-rule-whitelist": "^2.0.0",
+    "textlint-rule-preset-ja-technical-writing": "^3.1.0",
+    "textlint-rule-spellcheck-tech-word": "^5.0.0"
+  }
+}

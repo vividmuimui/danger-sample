@@ -1,0 +1,13 @@
+{
+    "rules": {
+        // ....
+    },
+    "filters": {
+        "comments": true,
+        "whitelist": {
+          "allow": [
+               // ....
+          ]
+        }
+    }
+}

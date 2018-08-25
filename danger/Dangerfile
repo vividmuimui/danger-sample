@@ -14,3 +14,5 @@ fail("fit left in tests") if `grep -r fit specs/ `.length > 1
 
 # rubocop
 rubocop.lint inline_comment: true
+
+textlint.lint

@@ -2,6 +2,7 @@ source 'https://rubygems.org'
 
 gem "danger"
 gem "danger-rubocop"
+gem "danger-textlint"
 gem "onkcop"
 gem "pry"
 gem "pry-byebug"
