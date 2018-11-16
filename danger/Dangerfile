@@ -21,6 +21,7 @@ o, s = Open3.capture2e("bundle exec rubocop --require rubocop/formatter/checksty
 unless s.success?
   puts o
 end
+checkstyle_format.base_path = Dir.pwd
 checkstyle_format.report 'rubocop-checkstyle.xml'
 
 # rubocop + suggester
