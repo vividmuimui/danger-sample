@@ -3,6 +3,8 @@ source 'https://rubygems.org'
 gem "danger"
 gem "danger-suggester"
 gem "danger-rubocop"
+gem "danger-checkstyle_format"
 gem "onkcop"
 gem "pry"
 gem "pry-byebug"
+gem "rubocop-checkstyle_formatter"

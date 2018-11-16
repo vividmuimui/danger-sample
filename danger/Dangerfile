@@ -13,6 +13,21 @@ fail("fdescribe left in tests") if `grep -r fdescribe specs/ `.length > 1
 fail("fit left in tests") if `grep -r fit specs/ `.length > 1
 
 # rubocop
-rubocop.lint
-`bundle exec rubocop -a`
+# rubocop.lint
+
+# rubocop + checkstyle_format
+# `bundle exec rubocop --require rubocop/formatter/checkstyle_formatter --format RuboCop::Formatter::CheckstyleFormatter --out rubocop-checkstyle.xml`
+o, s = Open3.capture2e("bundle exec rubocop --require rubocop/formatter/checkstyle_formatter --format RuboCop::Formatter::CheckstyleFormatter --out rubocop-checkstyle.xml")
+unless s.success?
+  puts o
+end
+checkstyle_format.base_path = Dir.pwd
+checkstyle_format.report 'rubocop-checkstyle.xml'
+
+# rubocop + suggester
+# `bundle exec rubocop -a`
+o, s = Open3.capture2e("bundle exec rubocop -a")
+unless s.success?
+  puts o
+end
 suggester.suggest
