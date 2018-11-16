@@ -19,8 +19,8 @@ fail("fit left in tests") if `grep -r fit specs/ `.length > 1
 # `bundle exec rubocop --require rubocop/formatter/checkstyle_formatter --format RuboCop::Formatter::CheckstyleFormatter --out rubocop-checkstyle.xml`
 o, s = Open3.capture2e("bundle exec rubocop --require rubocop/formatter/checkstyle_formatter --format RuboCop::Formatter::CheckstyleFormatter --out rubocop-checkstyle.xml")
 unless s.success?
-  p o
-  exit
+  puts o
+  return
 end
 checkstyle_format.report 'rubocop-checkstyle.xml'
 
@@ -28,7 +28,7 @@ checkstyle_format.report 'rubocop-checkstyle.xml'
 # `bundle exec rubocop -a`
 o, s = Open3.capture2e("bundle exec rubocop -a")
 unless s.success?
-  p o
-  exit
+  puts o
+  return
 end
 suggester.suggest
