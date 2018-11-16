@@ -19,8 +19,8 @@ fail("fit left in tests") if `grep -r fit specs/ `.length > 1
 `bundle exec rubocop
   --require rubocop/formatter/checkstyle_formatter \
   --format RuboCop::Formatter::CheckstyleFormatter \
-  --out tmp/rubocop-checkstyle.xml`
-checkstyle_format.report 'tmp/rubocop-checkstyle.xml'
+  --out rubocop-checkstyle.xml`
+checkstyle_format.report 'rubocop-checkstyle.xml'
 
 # rubocop + suggester
 `bundle exec rubocop -a`
