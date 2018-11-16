@@ -1,9 +1,9 @@
 source 'https://rubygems.org'
 
 gem "danger"
-gem "danger-suggester"
-gem "danger-rubocop"
 gem "danger-checkstyle_format"
+gem "danger-rubocop"
+gem "danger-suggester"
 gem "onkcop"
 gem "pry"
 gem "pry-byebug"
