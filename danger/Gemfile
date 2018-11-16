@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 gem "danger"
-gem "danger-rubocop"
+gem "danger-suggester"
 gem "onkcop"
 gem "pry"
 gem "pry-byebug"
