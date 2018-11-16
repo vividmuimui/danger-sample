@@ -1,37 +1,23 @@
-# Ruby CircleCI 2.0 configuration file
-#
-# Check https://circleci.com/docs/2.0/language-ruby/ for more details
-#
 version: 2
 jobs:
-  build:
+  test-sample-project:
     docker:
       # specify the version you desire here
        - image: circleci/ruby:2.5.1-node-browsers
-
-      # Specify service dependencies here if necessary
-      # CircleCI maintains a library of pre-built images
-      # documented at https://circleci.com/docs/2.0/circleci-images/
-      # - image: circleci/postgres:9.4
-
     working_directory: ~/repo
-
     steps:
       - checkout
-
       # Download and cache dependencies
       - restore_cache:
           keys:
           - v1-dependencies-{{ checksum "sample-project/Gemfile.lock" }}
           # fallback to using the latest cache if no exact match is found
           - v1-dependencies-
-
       - run:
           name: install dependencies
           command: |
             bundle install --jobs=4 --retry=3 --path vendor/bundle
           working_directory: sample-project
-
       - save_cache:
           paths:
             - sample-project/vendor/bundle
@@ -39,33 +25,14 @@ jobs:
 
       # Database setup
       - run:
-          command: bundle exec rake db:create
+          command: bundle exec rake db:create db:schema:load
           working_directory: sample-project
-      - run:
-          command: bundle exec rake db:schema:load
-          working_directory: sample-project
-
       # run tests!
       - run:
           name: run tests
           command: bundle exec rails test -v
-          # command: |
-          #   mkdir /tmp/test-results
-          #   TEST_FILES="$(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings)"
-
-          #   bundle exec rails test --format progress \
-          #                   --format RspecJunitFormatter \
-          #                   --out /tmp/test-results/rspec.xml \
-          #                   --format progress \
-          #                   $TEST_FILES
           working_directory: sample-project
 
-      # collect reports
-      - store_test_results:
-          path: /tmp/test-results
-      - store_artifacts:
-          path: /tmp/test-results
-          destination: test-results
   danger:
     docker:
        - image: circleci/ruby:2.5.1-node-browsers
@@ -96,8 +63,7 @@ jobs:
 
 workflows:
   version: 2
-
   build_all:
     jobs:
-      - build
+      - test-sample-project
       - danger
