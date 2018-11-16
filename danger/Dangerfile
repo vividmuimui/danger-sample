@@ -13,6 +13,15 @@ fail("fdescribe left in tests") if `grep -r fdescribe specs/ `.length > 1
 fail("fit left in tests") if `grep -r fit specs/ `.length > 1
 
 # rubocop
-rubocop.lint
+# rubocop.lint
+
+# rubocop + checkstyle_format
+`bundle exec rubocop
+  --require rubocop/formatter/checkstyle_formatter \
+  --format RuboCop::Formatter::CheckstyleFormatter \
+  --out tmp/rubocop-checkstyle.xml`
+checkstyle_format.report 'tmp/rubocop-checkstyle.xml'
+
+# rubocop + suggester
 `bundle exec rubocop -a`
 suggester.suggest
